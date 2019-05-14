@@ -21,7 +21,10 @@ public class CustomerService {
 	public void save(Customer customer) {
 		//repo.save(customer);
 		if(customer.getId()==null) {
-			customer.setId(new Random().nextLong());
+			Random rand = new Random();
+			System.out.printf("%04d%n", rand.nextInt(1000));
+			Customer cust=customerList.get(customerList.size()-1);
+			customer.setId(cust.getId()+1);
 			customerList.add(customer);
 		}else {
 		Predicate<Customer> isEmployeeActive = e -> e.getId().equals(customer.getId());
@@ -35,29 +38,24 @@ public class CustomerService {
 	
 	public List<Customer> listAll() {
 		//return (List<Customer>) repo.findAll();
-		customerList.forEach(i->System.out.println(i));
 		customerList.sort((i,j)->i.getId().compareTo(j.getId()));
 		return customerList;
 	}
 	
 	public Customer get(Long id) {
 		System.out.println(id);
-		customerList.forEach(i->System.out.println(i));
 		Predicate<Customer> isEmployeeActive = e -> e.getId().equals(id);
 		Customer cust= customerList.stream().filter(isEmployeeActive)
 				.collect(Collectors.toList()).get(0);
-		System.out.println(cust);
 		if(cust!=null)return cust;
 		return new Customer();
 		//repo.findById(id).get();
 	}
 	
 	public void delete(Long id) {
-		customerList.forEach(i->System.out.println(i));
 		Predicate<Customer> isEmployeeActive = e -> e.getId().equals(id);
 		Customer cust=customerList.stream().filter(isEmployeeActive)
 		.collect(Collectors.toList()).get(0);
-		System.out.println(cust);
 		if(cust!=null)
 		customerList.remove(cust);
 		//repo.deleteById(id);
