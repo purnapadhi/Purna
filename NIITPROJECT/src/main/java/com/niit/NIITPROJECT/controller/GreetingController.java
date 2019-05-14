@@ -27,6 +27,12 @@ public class GreetingController {
 	@Autowired
 	EmployeeService empService;
 
+		@GetMapping
+	public String  getwelcome() {
+		logger.info("getting welcome message");
+		return "Welcome to purna ka rest web service";
+	}
+
 	
 	@GetMapping("/getemployees")
 	public List<Emp> getAllEmp() {
